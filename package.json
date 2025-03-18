@@ -1,0 +1,24 @@
+{
+	"name": "elysia",
+	"version": "1.0.50",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"dev": "bun run --watch src/index.ts",
+		"fmt": "biome format --write .",
+		"fmt:check": "biome format .",
+		"lint": "biome lint --write .",
+		"lint:check": "biome check ."
+	},
+	"dependencies": {
+		"@ai-sdk/groq": "^1.1.14",
+		"@bogeychan/elysia-polyfills": "^0.6.4",
+		"ai": "^4.1.61",
+		"elysia": "latest",
+		"flagsmith-nodejs": "^5.1.1"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "1.9.4",
+		"bun-types": "latest"
+	},
+	"module": "src/index.js"
+}
