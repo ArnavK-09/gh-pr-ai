@@ -7,7 +7,8 @@
 		"fmt": "biome format --write .",
 		"fmt:check": "biome format .",
 		"lint": "biome lint --write --unsafe .; biome check --fix --unsafe .",
-		"lint:check": "biome check ."
+		"lint:check": "biome check .",
+		"build": "bun build  --compile --minify-whitespace  --minify-syntax  --target bun  --outfile server  ./src/index.ts"
 	},
 	"dependencies": {
 		"@ai-sdk/groq": "^1.1.14",
@@ -20,6 +21,7 @@
 	"devDependencies": {
 		"@biomejs/biome": "1.9.4",
 		"@elysiajs/eden": "^1.2.0",
+		"@expo/server": "^0.5.3",
 		"bun-types": "latest"
 	},
 	"module": "src/index.js"
