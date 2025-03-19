@@ -6,7 +6,7 @@ import { Database } from "bun:sqlite";
 /**
  * Init database
  */
-const db = new Database();
+const db = new Database("./tempsql");
 
 /**
  * Basic Setup

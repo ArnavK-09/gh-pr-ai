@@ -70,7 +70,7 @@ export default new Elysia().post(
 				const query = db.query(
 					"INSERT INTO pr_comments (owner, repo, pull, filename, comment, meta) VALUES ($owner, $repo, $pull, $filename, $comment, $meta)",
 				);
-				const res = query.run({
+				query.run({
 					$owner: owner,
 					$repo: repo,
 					$pull: pull,
