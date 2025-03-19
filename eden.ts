@@ -1,7 +1,7 @@
 import { treaty } from "@elysiajs/eden";
 import type app from "./src";
 
-const eden = treaty<typeof app>("http://localhost:3000");
+const eden = treaty<typeof app>("https://gh-pr-ai.onrender.com/");
 
 console.time("fetch");
 const { data, error } = await eden.v1.review.post({

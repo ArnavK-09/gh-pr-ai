@@ -1,4 +1,4 @@
-import app from "../src/index";
+const app = require("../server.js");
 
 export const config = { runtime: "edge" };
 
