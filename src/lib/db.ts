@@ -6,7 +6,7 @@ import { Database } from "bun:sqlite";
 /**
  * Init database
  */
-const db = new Database("./sql2.db");
+const db = new Database();
 
 /**
  * Basic Setup
