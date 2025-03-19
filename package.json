@@ -6,7 +6,7 @@
 		"dev": "bun run --watch src/index.ts",
 		"fmt": "biome format --write .",
 		"fmt:check": "biome format .",
-		"lint": "biome lint --write .",
+		"lint": "biome lint --write --unsafe .; biome check --fix --unsafe .",
 		"lint:check": "biome check ."
 	},
 	"dependencies": {

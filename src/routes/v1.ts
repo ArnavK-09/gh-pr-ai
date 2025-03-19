@@ -2,11 +2,11 @@
  * Imports
  */
 import Elysia, { error, t } from "elysia";
-import { octokit } from "../lib/octokit";
-import { reviewPrPrompt } from "../lib/prompts";
+import flagsmith from "../flagsmith";
 import { generateText } from "../lib/ai";
 import db from "../lib/db";
-import flagsmith from "../flagsmith";
+import { octokit } from "../lib/octokit";
+import { reviewPrPrompt } from "../lib/prompts";
 
 const isCacheEnable = async () => {
 	return !!(await flagsmith.getEnvironmentFlags()).getFeatureValue(

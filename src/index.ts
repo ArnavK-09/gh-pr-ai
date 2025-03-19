@@ -2,8 +2,8 @@
  * Imports
  */
 import { Elysia } from "elysia";
-import { generateText } from "./lib/ai";
 import flagsmith from "./flagsmith";
+import { generateText } from "./lib/ai";
 import { v1Router, v2Router } from "./routers/index";
 import presentRoutes from "./routes/index";
 import appStore from "./store";
