@@ -29,7 +29,7 @@ const app = new Elysia()
 		}
 	})
 	.onRequest(async ({ store, set }) => {
-		store.visitors = store.visitors + 1;
+		store.requests = store.requests + 1;
 		if (
 			(await flagsmith.getEnvironmentFlags()).getFeatureValue(
 				"enable_http_cache",

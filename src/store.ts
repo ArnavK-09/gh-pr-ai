@@ -7,7 +7,7 @@ import Elysia from "elysia";
  * Store Data
  */
 const STORE = {
-	visitors: 0,
+	requests: 0,
 };
 
 /**
