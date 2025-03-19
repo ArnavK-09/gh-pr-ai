@@ -1,8 +1,10 @@
+/**
+ * Imports
+ */
 import { createGroq } from "@ai-sdk/groq";
 import { generateText as aiGenerateText } from "ai";
-import flagsmith from "./flagsmith";
+import flagsmith from "../flagsmith";
 
-// @TODO
 const groq = createGroq({
 	apiKey: Bun.env.GROQ_API_KEY,
 });

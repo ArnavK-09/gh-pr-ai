@@ -1,3 +1,6 @@
+/**
+ * Imports
+ */
 import Elysia from "elysia";
 
 import searchRoutesForV1 from "../routes/v1";

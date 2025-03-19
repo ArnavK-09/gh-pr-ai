@@ -1,3 +1,6 @@
+/**
+ * Imports
+ */
 import Elysia, { error } from "elysia";
 
 export default new Elysia().all("/*", () => {

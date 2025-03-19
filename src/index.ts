@@ -2,7 +2,7 @@
  * Imports
  */
 import { Elysia } from "elysia";
-import { generateText } from "./ai";
+import { generateText } from "./lib/ai";
 import flagsmith from "./flagsmith";
 import { v1Router, v2Router } from "./routers/index";
 import presentRoutes from "./routes/index";

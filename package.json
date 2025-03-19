@@ -12,12 +12,14 @@
 	"dependencies": {
 		"@ai-sdk/groq": "^1.1.14",
 		"@bogeychan/elysia-polyfills": "^0.6.4",
+		"@octokit/rest": "^21.1.1",
 		"ai": "^4.1.61",
 		"elysia": "latest",
 		"flagsmith-nodejs": "^5.1.1"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "1.9.4",
+		"@elysiajs/eden": "^1.2.0",
 		"bun-types": "latest"
 	},
 	"module": "src/index.js"
