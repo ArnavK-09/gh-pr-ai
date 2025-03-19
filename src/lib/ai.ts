@@ -6,7 +6,7 @@ import { generateText as aiGenerateText } from "ai";
 import flagsmith from "../flagsmith";
 
 const groq = createGroq({
-	apiKey: Bun.env.GROQ_API_KEY,
+	apiKey: process.env.GROQ_API_KEY,
 });
 
 const DEFAULT_MODEL = async () => {

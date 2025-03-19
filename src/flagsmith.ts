@@ -7,7 +7,7 @@ import { Flagsmith } from "flagsmith-nodejs";
  * Flagmsith Setup
  */
 const flagsmith = new Flagsmith({
-	environmentKey: Bun.env.FLAGSMITH_ENV_KEY,
+	environmentKey: process.env.FLAGSMITH_ENV_KEY,
 });
 
 /**

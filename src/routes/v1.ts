@@ -7,6 +7,7 @@ import { generateText } from "../lib/ai";
 import db from "../lib/db";
 import { octokit } from "../lib/octokit";
 import { reviewPrPrompt } from "../lib/prompts";
+import type { GithubPRResponse } from "../types";
 
 const isCacheEnable = async () => {
 	return !!(await flagsmith.getEnvironmentFlags()).getFeatureValue(

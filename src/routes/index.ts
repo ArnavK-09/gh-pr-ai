@@ -14,7 +14,7 @@ export default new Proxy(
 	},
 	{
 		get(target, prop) {
-			// @ts-expect-error Default v1 version
+			// @ts-ignore Default v1 version
 			return prop in target ? target[prop] : v1Routes;
 		},
 	},

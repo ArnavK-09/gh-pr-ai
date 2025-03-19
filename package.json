@@ -8,7 +8,7 @@
 		"fmt:check": "biome format .",
 		"lint": "biome lint --write --unsafe .; biome check --fix --unsafe .",
 		"lint:check": "biome check .",
-		"build": "bun build  --compile --minify-whitespace  --minify-syntax  --target bun  --outfile server  ./src/index.ts"
+		"build": "bun build  --compile --minify-whitespace  --minify-syntax  --target=bun  --outfile=server.js  ./src/index.ts"
 	},
 	"dependencies": {
 		"@ai-sdk/groq": "^1.1.14",

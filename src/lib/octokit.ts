@@ -4,7 +4,7 @@
 import { Octokit } from "@octokit/rest";
 
 export const octokit = new Octokit({
-	auth: Bun.env.GITHUB_TOKEN,
+	auth: process.env.GITHUB_TOKEN,
 });
 
 /**

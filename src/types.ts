@@ -1,4 +1,4 @@
-type GithubPRResponse = {
+export type GithubPRResponse = {
 	url: string;
 	id: number;
 	node_id: string;
