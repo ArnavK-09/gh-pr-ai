@@ -19,7 +19,7 @@ db.exec(`
       pull INTEGER NOT NULL,
       filename TEXT NOT NULL,
       comment TEXT NOT NULL,
-      meta JSON NOT NULL,
+      meta TEXT NOT NULL,
       created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     );
   `);

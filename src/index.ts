@@ -1,3 +1,5 @@
+import { cors } from "@elysiajs/cors";
+import { html } from "@elysiajs/html";
 /**
  * Imports
  */
@@ -17,12 +19,30 @@ const DEFAULT_API_VERSION: keyof typeof presentRoutes = (
 ).getFeatureValue("default_api_version");
 
 /**
- * Elysia Entrypoint
+ * Base api router
  */
-const app = new Elysia()
+const api = new Elysia({ prefix: "/api" })
 	.use(appStore)
 	.use(v1Router)
 	.use(v2Router)
+	.get("/", ({ store }) => store)
+	.get("/flagsmith", async () =>
+		JSON.parse(JSON.stringify(await flagsmith.getEnvironmentFlags())),
+	)
+	.get("/test", async () => {
+		const { text } = await generateText({ prompt: "hi" });
+		return { text };
+	})
+	.use(presentRoutes[DEFAULT_API_VERSION])
+	.listen(PORT);
+/**
+ * Elysia Entrypoint
+ */
+const app = new Elysia()
+	.use(cors())
+	.use(appStore)
+	.use(api)
+	.use(html())
 	.onError(({ code }) => {
 		if (code === "NOT_FOUND") {
 			return { message: "Route not found" };
@@ -38,15 +58,7 @@ const app = new Elysia()
 			set.headers["Cache-Control"] = `max-age=${3600}`;
 		}
 	})
-	.get("/", ({ store }) => store)
-	.get("/flagsmith", async () =>
-		JSON.parse(JSON.stringify(await flagsmith.getEnvironmentFlags())),
-	)
-	.get("/test", async () => {
-		const { text } = await generateText({ prompt: "hi" });
-		return { text };
-	})
-	.use(presentRoutes[DEFAULT_API_VERSION])
+	.get("/", () => Bun.file("frontend/index.html").text())
 	.listen(PORT);
 
 /**

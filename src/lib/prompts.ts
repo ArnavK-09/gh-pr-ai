@@ -17,7 +17,6 @@ You are an advanced AI code reviewer. Your task is to analyze the following Git 
 ${diff}
 \`\`\`
 
-## Review:
 ### 🔍 Summary:
 Provide a brief summary of what this change does and its impact.  
 

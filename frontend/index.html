@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PR Review App</title>
+  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <link rel="icon" href="https://emoji-route.deno.dev/svg/🔫">
+    <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          typography: {
+            DEFAULT: {
+              css: {
+                maxWidth: 'none',
+                color: '#24292f',
+                h1: {
+                  color: '#24292f',
+                  fontWeight: '600',
+                },
+                h2: {
+                  color: '#24292f',
+                  fontWeight: '600',
+                },
+                h3: {
+                  color: '#24292f',
+                  fontWeight: '1200',
+                },
+                blockquote: {
+                  color: '#57606a',
+                  borderLeftColor: '#d0d7de',
+                },
+                table: {
+                  fontSize: '0.875em',
+                },
+                'thead th': {
+                  padding: '0.5714286em',
+                  backgroundColor: '#f6f8fa',
+                },
+                'tbody td': {
+                  padding: '0.5714286em',
+                },
+                code: {
+                  color: '#24292f',
+                  backgroundColor: '#f6f8fa',
+                  padding: '0.2em 0.4em',
+                  borderRadius: '6px',
+                  fontSize: '0.875em',
+                },
+                pre: {
+                  backgroundColor: '#f6f8fa',
+                  color: '#24292f',
+                  code: {
+                    backgroundColor: 'transparent',
+                    padding: '0',
+                    borderRadius: '0',
+                  }
+                },
+              },
+            },
+          },
+          colors: {
+            github: {
+              dark: '#24292f',
+              light: '#f6f8fa',
+              border: '#d0d7de',
+              button: '#2da44e',
+              buttonHover: '#2c974b'
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    .markdown {
+      max-width: none;
+      color: #24292f;
+    }
+    .markdown h1, .markdown h2, .markdown h3 {
+      color: #24292f;
+      font-weight: 600;
+    }
+    .markdown blockquote {
+      color: #57606a;
+      border-left: 4px solid #d0d7de;
+      padding-left: 1em;
+      margin-left: 0;
+    }
+    .markdown table {
+      font-size: 0.875em;
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .markdown th, .markdown td {
+      padding: 0.5714286em;
+      border: 1px solid #d0d7de;
+    }
+    .markdown code {
+      color: #24292f;
+      background-color: #f6f8fa;
+      padding: 0.2em 0.4em;
+      border-radius: 6px;
+      font-size: 0.875em;
+    }
+    .markdown pre {
+      background-color: #f6f8fa;
+      color: #24292f;
+      padding: 1em;
+      border-radius: 6px;
+      overflow-x: auto;
+    }
+
+    .markdown h3 {
+      font-size: 1.25em;
+      font-weight: 600;
+      margin-bottom: 0.5em; 
+    }
+  </style>
+  <style>
+    .typing-effect {
+      overflow: hidden;
+      border-right: 2px solid #000;
+      white-space: pre-wrap;
+      animation: typing 1s steps(100, end), blink-caret 0.55s step-end infinite;
+    }
+    @keyframes blink-caret {
+      from, to { border-color: transparent }
+      50% { border-color: #000 }
+    }
+  </style>
+</head>
+<body class="bg-github-light min-h-screen">
+  <div id="root"></div>
+  <script type="text/babel">
+    function TypeWriter({ text, onComplete }) {
+      const [displayText, setDisplayText] = React.useState('');
+      const [isComplete, setIsComplete] = React.useState(false);
+
+      React.useEffect(() => {
+        let currentText = '';
+        let currentIndex = 0;
+
+        const interval = setInterval(() => {
+          if (currentIndex < text.length) {
+            currentText += text[currentIndex];
+            setDisplayText(currentText);
+            currentIndex++;
+          } else {
+            clearInterval(interval);
+            setIsComplete(true);
+            onComplete && onComplete();
+          }
+        },0.5);
+
+        return () => clearInterval(interval);
+      }, [text]);
+
+      return (
+        <div className={`markdown ${isComplete ? '' : 'typing-effect'}`}
+             dangerouslySetInnerHTML={{ __html: marked.parse(displayText) }}
+             style={{ overflowX: 'auto' }} />
+      );
+    }
+
+    function App() {
+      const [formData, setFormData] = React.useState({
+        owner: 'mindsdb',
+        repo: 'mindsdb-js-sdk',
+        pull: 99
+      });
+      const [reviews, setReviews] = React.useState([]);
+      const [loading, setLoading] = React.useState(false);
+      const [error, setError] = React.useState('');
+      const [completedReviews, setCompletedReviews] = React.useState(new Set());
+
+      const handleReviewComplete = (index) => {
+        setCompletedReviews(prev => new Set([...prev, index]));
+      };
+      const handleSubmit = async (e) => {
+        e.preventDefault();
+        setLoading(true);
+        setError('');
+        setReviews([]);
+        setCompletedReviews(new Set());
+        try {
+          const response = await fetch('/api/v1/review', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              owner: formData.owner,
+              repo: formData.repo,
+              pull: parseInt(formData.pull)
+            })
+          });
+
+          if (!response.ok) {
+            const errorResponse = await response.json();
+            throw new Error(errorResponse.message || 'Internal Error');
+          }
+
+          const reader = response.body.getReader();
+          const decoder = new TextDecoder();
+
+          while (true) {
+            const { value, done } = await reader.read();
+            if (done) break;
+            
+            const text = decoder.decode(value, { stream: true });
+            // Since the text is a JSON stream, we need to handle it as individual JSON objects
+            const lines = text.split('}{').map(line => {
+              // Restore the curly braces that were split
+              if (!line.startsWith('{')) line = '{' + line;
+              if (!line.endsWith('}')) line = line + '}';
+              return line;
+            });
+            
+            const newReviews = lines
+              .filter(line => line.trim())
+              .map(line => {
+                try {
+                  const parsedLine = JSON.parse(line);
+                  if (!parsedLine || typeof parsedLine !== 'object') {
+                    return null;
+                  }
+                  return {
+                    filename: parsedLine.filename || 'Unknown File',
+                    comment: parsedLine.comment || '',
+                    meta: parsedLine.meta || { author: 'System' }
+                  };
+                } catch (err) {
+                  return null;
+                }
+              })
+              .filter(review => review !== null);
+            
+            if (newReviews.length > 0) {
+              setReviews(prev => [...prev, ...newReviews]);
+            }
+          }
+        } catch (err) {
+          console.error(err);
+          setError(err.message);
+        } finally {
+         setLoading(false)
+        }
+      };
+
+      return (
+        <div className="container mx-auto px-4 py-8 max-w-4xl">
+          <h1 className="text-3xl font-bold text-github-dark mb-8 text-center">
+            GitHub PR Review
+          </h1>
+          
+          <form onSubmit={handleSubmit} className="bg-white p-6 rounded-lg shadow-md border border-github-border mb-8">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div>
+                <label className="block text-sm font-medium text-github-dark mb-2">
+                  Repository Owner
+                </label>
+                <input
+                  type="text"
+                  value={formData.owner}
+                  onChange={(e) => setFormData({...formData, owner: e.target.value})}
+                  className="w-full px-3 py-2 border border-github-border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  placeholder="e.g. facebook"
+                  required
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-github-dark mb-2">
+                  Repository Name
+                </label>
+                <input
+                  type="text"
+                  value={formData.repo}
+                  onChange={(e) => setFormData({...formData, repo: e.target.value})}
+                  className="w-full px-3 py-2 border border-github-border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  placeholder="e.g. react"
+                  required
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-github-dark mb-2">
+                  Pull Request Number
+                </label>
+                <input
+                  type="number"
+                  value={formData.pull}
+                  onChange={(e) => setFormData({...formData, pull: e.target.value})}
+                  className="w-full px-3 py-2 border border-github-border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  placeholder="e.g. 69"
+                  required
+                />
+              </div>
+            </div>
+            <button
+              type="submit"
+              disabled={loading}
+              className={`mt-4 w-full bg-github-button hover:bg-github-buttonHover text-white font-medium py-2 px-4 rounded-md transition-colors ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
+            >
+              {loading ? 'Reviewing...' : 'Review PR'}
+            </button>
+          </form>
+
+          {error && (
+            <div className="bg-red-50 border-l-4 border-red-400 p-4 mb-8">
+              <p className="text-red-700">{error}</p>
+            </div>
+          )}
+
+          {reviews.length > 0 && (
+            <div className="space-y-6">
+              {reviews.map((review, index) => (
+                <div key={index} className="bg-white p-6 rounded-lg shadow-md border border-github-border">
+                  <div className="flex items-center justify-between mb-4">
+                    <h3 className="text-lg font-semibold text-github-dark">
+                      {review.filename}
+                    </h3>
+                    <span className="text-sm text-gray-500">
+                      By {review.meta ? review.meta.author :  JSON.stringify(review)}
+                    </span>
+                  </div>
+                  {completedReviews.has(index) ? (
+                    <div className="markdown">
+                      <div className="bg-github-light p-4 rounded-md border border-github-border overflow-x-auto"
+                           dangerouslySetInnerHTML={{ __html: marked.parse(review.comment) }} />
+                    </div>
+                  ) : (
+                    <div className="bg-github-light p-4 rounded-md border border-github-border overflow-x-auto">
+                      <TypeWriter 
+                        text={review.comment}
+                        onComplete={() => handleReviewComplete(index)}
+                      />
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      );
+    }
+
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<App />);
+  </script>
+</body>
+</html>
