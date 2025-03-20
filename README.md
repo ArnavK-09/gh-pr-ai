@@ -61,6 +61,27 @@ gh-pr-ai leverages Flagsmith for feature flag management, enabling:
 
 The integration is handled in `src/flagsmith.ts`, making it easy to manage feature flags across the application.
 
+### Feature Flags Overview
+
+Below is a comprehensive list of feature flags used in gh-pr-ai:
+
+| Flag Name | Description | Default State | Impact |
+|-----------|-------------|---------------|--------|
+| `enableAIReview` | Controls AI-powered code review functionality | Enabled | Activates intelligent code analysis and suggestions |
+| `useMarkdown` | Toggle Markdown rendering in PR comments | Enabled | Enables rich text formatting in review comments |
+| `debugMode` | Enables detailed logging and debugging features | Disabled | Shows additional debugging information for development |
+| `experimentalFeatures` | Controls access to experimental features | Disabled | Enables testing of new features before full release |
+
+### Flagsmith Dashboard
+
+> Here's how our feature flags are managed in the Flagsmith dashboard:
+
+| Screenshot |
+|------------|
+| ![Flagsmith Dashboard Overview](https://via.placeholder.com/800x400?text=Flagsmith+Dashboard+Overview) |
+| ![Feature Flags Configuration](https://via.placeholder.com/800x400?text=Feature+Flags+Configuration) |
+| ![Environment Settings](https://via.placeholder.com/800x400?text=Environment+Settings) |
+| ![Analytics and Metrics](https://via.placeholder.com/800x400?text=Analytics+and+Metrics) |
 ## 📁 Project Structure
 
 ```
