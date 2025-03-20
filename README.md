@@ -1,4 +1,4 @@
-<h1 align="center">🔫 gh-pr-ai 🔫</h1>
+![image](https://github.com/user-attachments/assets/86458e58-dab6-40d8-a541-46b3682b8d27)<h1 align="center">🔫 gh-pr-ai 🔫</h1>
 <h2 align="center">AI-Powered GitHub PR Review Assistant</h2>
 
 <p align="center">
@@ -78,10 +78,12 @@ Below is a comprehensive list of feature flags used in gh-pr-ai:
 
 | Screenshot |
 |------------|
-| ![Flagsmith Dashboard Overview](https://via.placeholder.com/800x400?text=Flagsmith+Dashboard+Overview) |
-| ![Feature Flags Configuration](https://via.placeholder.com/800x400?text=Feature+Flags+Configuration) |
-| ![Environment Settings](https://via.placeholder.com/800x400?text=Environment+Settings) |
-| ![Analytics and Metrics](https://via.placeholder.com/800x400?text=Analytics+and+Metrics) |
+| ![image](https://github.com/user-attachments/assets/9a2943a3-9bd7-4450-a702-88b83351f27d) |
+| ![image](https://github.com/user-attachments/assets/e6f9feb7-29fb-41c2-b570-7dd355e2790a) |
+| ![image](https://github.com/user-attachments/assets/8318c6c6-0f36-42bd-8c66-2e79e87ae785) |
+| ![image](https://github.com/user-attachments/assets/e6e07a43-72ad-4545-aa48-f106b8686b3a) |
+| ![image](https://github.com/user-attachments/assets/804fb257-80a6-4c22-b181-a517d29f6634) |
+
 ## 📁 Project Structure
 
 ```
@@ -148,6 +150,7 @@ Found a bug or need help? Please create an issue on the [GitHub repository](http
     </tr>
   </tbody>
 </table>
+
 ---
 
 <h2 align="center">📄 License</h2>
