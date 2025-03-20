@@ -1,4 +1,4 @@
-![image](https://github.com/user-attachments/assets/86458e58-dab6-40d8-a541-46b3682b8d27)<h1 align="center">🔫 gh-pr-ai 🔫</h1>
+<h1 align="center">🔫 gh-pr-ai 🔫</h1>
 <h2 align="center">AI-Powered GitHub PR Review Assistant</h2>
 
 <p align="center">
@@ -78,6 +78,7 @@ Below is a comprehensive list of feature flags used in gh-pr-ai:
 
 | Screenshot |
 |------------|
+| ![image](https://github.com/user-attachments/assets/86458e58-dab6-40d8-a541-46b3682b8d27) |
 | ![image](https://github.com/user-attachments/assets/9a2943a3-9bd7-4450-a702-88b83351f27d) |
 | ![image](https://github.com/user-attachments/assets/e6f9feb7-29fb-41c2-b570-7dd355e2790a) |
 | ![image](https://github.com/user-attachments/assets/8318c6c6-0f36-42bd-8c66-2e79e87ae785) |
